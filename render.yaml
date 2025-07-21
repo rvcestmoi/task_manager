@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: gestionnaire-taches
+    env: python
+    buildCommand: ""
+    startCommand: python app.py
+    plan: free

@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="task-list" id="taskList">
+  {% for task in tasks %}
+    <div class="task {% if task.status == 'late' %}late{% else %}ok{% endif %}" data-task-id="{{ task.id }}">
+      <div class="task-header">
+        <strong>{{ task.name }}</strong>
+        <button class="done-button" data-id="{{ task.id }}">✓</button>
+      </div>
+      <div class="task-info">
+        Échéance : {{ task.next_due.strftime('%H:%M') }}<br>
+        {% if task.remaining > 0 %}
+          Dans {{ (task.remaining // 3600)|int }}h {{ ((task.remaining % 3600) // 60)|int }}min
+        {% else %}
+          En retard de {{ (-task.remaining // 3600)|int }}h {{ ((-task.remaining % 3600) // 60)|int }}min
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
