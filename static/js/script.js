@@ -54,9 +54,6 @@ document.getElementById("urgentToggle").addEventListener("change", function () {
     document.querySelectorAll(".task").forEach(task => {
         const freq = parseFloat(task.getAttribute("data-frequency"));
         const remaining = parseFloat(task.getAttribute("data-remaining"));
-        console.log(freq)
-        console.log(remaining)
-
 
         let isUrgent = false;
 
