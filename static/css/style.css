@@ -135,6 +135,31 @@ button:hover {
 .form-group {
   margin-bottom: 1em;
 }
+.task-section-wrapper {
+  display: flex;
+  gap: 2em;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.task-zone {
+  flex: 1 1 45%;
+  min-width: 320px;
+}
+
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1em;
+}
+.task-filter {
+  margin-bottom: 1em;
+}
+.task-filter label {
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
 
 /* Responsive & petites optimisations */
 @media (max-width: 600px) {
@@ -146,3 +171,4 @@ button:hover {
     margin-top: 0.5em;
   }
 }
+

@@ -1,22 +1,66 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="task-list" id="taskList">
-  {% for task in tasks %}
-    <div class="task {% if task.status == 'late' %}late{% else %}ok{% endif %}" data-task-id="{{ task.id }}">
-      <div class="task-header">
-        <strong>{{ task.name }}</strong>
-        <button class="done-button" data-id="{{ task.id }}">✓</button>
-      </div>
-      <div class="task-info">
-        Échéance : {{ task.next_due.strftime('%H:%M') }}<br>
-        {% if task.remaining > 0 %}
-          Dans {{ (task.remaining // 3600)|int }}h {{ ((task.remaining % 3600) // 60)|int }}min
-        {% else %}
-          En retard de {{ (-task.remaining // 3600)|int }}h {{ ((-task.remaining % 3600) // 60)|int }}min
-        {% endif %}
-      </div>
+<div class="task-section-wrapper">
+  <div class="task-zone" id="shortZone">
+    <h3>Tâches à court terme (&lt; 30h)</h3>
+    <div class="task-grid">
+      {% for task in short_tasks %}
+        <div class="task {{ 'late' if task.status == 'late' else 'ok' }}" data-task-id="{{ task.id }}">
+          <div class="task-header">
+            <strong>{{ task.name }}</strong>
+            <button class="done-button" data-id="{{ task.id }}">✓</button>
+          </div>
+          <div class="task-info">
+            Échéance : {{ task.next_due.strftime('%H:%M') }}<br>
+            {% if task.remaining > 0 %}
+              Dans {{ (task.remaining // 3600)|int }}h {{ ((task.remaining % 3600) // 60)|int }}min
+            {% else %}
+              En retard de {{ (-task.remaining // 3600)|int }}h {{ ((-task.remaining % 3600) // 60)|int }}min
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
+  </div>
+
+
+  <div class="task-zone" id="longZone">
+      <div class="task-filter">
+        <label for="zoneFilter">Filtrer par zone :</label>
+        <select id="zoneFilter">
+          <option value="all">Toutes</option>
+          <option value="S-">Salon</option>
+          <option value="C-">Cuisine</option>
+          <option value="T-">Toilettes</option>
+          <option value="E-">Entrée</option>
+          <option value="SDB-">Salle de bain</option>
+          <option value="AUTRE">Autres</option>
+        </select>
+      </div>
+    <h3>Tâches à long terme (≥ 30h)</h3>
+    <div class="task-grid">
+      {% for task in long_tasks %}
+        <div class="task {{ 'late' if task.status == 'late' else 'ok' }}" data-task-id="{{ task.id }}"
+            data-zone="{% if task.name.startswith('SDB-') %}SDB-{% elif task.name.startswith('S-') %}S-{% elif task.name.startswith('C-') %}C-{% elif task.name.startswith('T-') %}T-{% elif task.name.startswith('E-') %}E-{% else %}AUTRE{% endif %}">
+
+
+          <div class="task-header">
+            <strong>{{ task.name }}</strong>
+            <button class="done-button" data-id="{{ task.id }}">✓</button>
+          </div>
+          <div class="task-info">
+            Échéance : {{ task.next_due.strftime('%H:%M') }}<br>
+            {% if task.remaining > 0 %}
+              Dans {{ (task.remaining // 3600)|int }}h {{ ((task.remaining % 3600) // 60)|int }}min
+            {% else %}
+              En retard de {{ (-task.remaining // 3600)|int }}h {{ ((-task.remaining % 3600) // 60)|int }}min
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
+
 {% endblock %}

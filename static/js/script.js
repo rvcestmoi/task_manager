@@ -34,4 +34,16 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     });
   }
+  document.getElementById("zoneFilter").addEventListener("change", function () {
+    const selectedZone = this.value;
+    document.querySelectorAll('#longZone .task').forEach(task => {
+        const zone = task.getAttribute('data-zone');
+        if (selectedZone === "all" || zone === selectedZone) {
+            task.style.display = "block";
+        } else {
+            task.style.display = "none";
+        }
+    });
+});
+
 });

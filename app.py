@@ -37,10 +37,20 @@ def index():
     now = datetime.now()
     tasks = Task.query.order_by(Task.next_due).all()
 
+    short_tasks = []
+    long_tasks = []
+
     for task in tasks:
         task.remaining = (task.next_due - now).total_seconds()
         task.status = "ok" if task.remaining > 0 else "late"
-    return render_template('index.html', tasks=tasks)
+
+        if task.frequency_hours < 32:
+            short_tasks.append(task)
+        else:
+            long_tasks.append(task)
+        
+    return render_template('index.html', short_tasks=short_tasks, long_tasks=long_tasks)
+
 
 @app.route('/done/<int:task_id>', methods=['POST'])
 @login_required
