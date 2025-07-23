@@ -10,7 +10,9 @@
     <h3>Tâches à court terme (&lt; 30h)</h3>
     <div class="task-grid">
       {% for task in short_tasks %}
-        <div class="task {{ 'late' if task.status == 'late' else 'ok' }}" data-task-id="{{ task.id }}">
+        <div class="task {{ 'late' if task.status == 'late' else 'ok' }}" data-task-id="{{ task.id }}"      data-frequency="{{ task.frequency_hours }}"
+     data-remaining="{{ task.remaining }}">
+          
           <div class="task-header">
             <strong>{{ task.name }}</strong>
             <button class="done-button" data-id="{{ task.id }}">✓</button>

@@ -6,11 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
     button.addEventListener("click", function () {
       const taskId = this.dataset.id;
 
-      fetch(`/done/${taskId}`, {
-        method: "POST"
-      }).then(() => {
-        location.reload(); // Recharge la page pour voir l'effet
-      });
+      fetch(`/done/${taskId}`, { method: 'POST' })
+  .then(() => {
+    // Recalcul du timer
+    setTimeout(() => {
+      location.reload();
+    }, 200); // léger délai pour laisser la tâche se remettre à jour
+  });
+
     });
   });
 
@@ -51,17 +54,27 @@ document.getElementById("urgentToggle").addEventListener("change", function () {
     document.querySelectorAll(".task").forEach(task => {
         const freq = parseFloat(task.getAttribute("data-frequency"));
         const remaining = parseFloat(task.getAttribute("data-remaining"));
+        console.log(freq)
+        console.log(remaining)
+
 
         let isUrgent = false;
 
-        if (freq < 30 && remaining <= 35 * 3600) {
+        if (freq <= 30 && remaining <= 20 * 3600) {
             isUrgent = true;
-        } else if (freq >= 30 && remaining <= 80 * 3600) {
+        } else if (freq > 30 && remaining <= 80 * 3600) {
             isUrgent = true;
         }
 
         task.style.display = (!showUrgentOnly || isUrgent) ? "block" : "none";
     });
+});
+window.addEventListener("DOMContentLoaded", function () {
+  const urgentCheckbox = document.getElementById("urgentToggle");
+  if (urgentCheckbox.checked) {
+    // Simule le déclenchement du filtre "Urgent"
+    urgentCheckbox.dispatchEvent(new Event("change"));
+  }
 });
 
 

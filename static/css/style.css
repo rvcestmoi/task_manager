@@ -159,6 +159,10 @@ button:hover {
   font-weight: bold;
   margin-right: 0.5em;
 }
+.urgent-filter {
+  margin-bottom: 1em;
+  font-weight: bold;
+}
 
 
 /* Responsive & petites optimisations */
