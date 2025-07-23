@@ -45,5 +45,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+document.getElementById("urgentToggle").addEventListener("change", function () {
+    const showUrgentOnly = this.checked;
+
+    document.querySelectorAll(".task").forEach(task => {
+        const freq = parseFloat(task.getAttribute("data-frequency"));
+        const remaining = parseFloat(task.getAttribute("data-remaining"));
+
+        let isUrgent = false;
+
+        if (freq < 30 && remaining <= 35 * 3600) {
+            isUrgent = true;
+        } else if (freq >= 30 && remaining <= 80 * 3600) {
+            isUrgent = true;
+        }
+
+        task.style.display = (!showUrgentOnly || isUrgent) ? "block" : "none";
+    });
+});
+
 
 });

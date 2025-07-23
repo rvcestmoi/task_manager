@@ -3,6 +3,10 @@
 {% block content %}
 <div class="task-section-wrapper">
   <div class="task-zone" id="shortZone">
+    <div class="urgent-filter">
+  <label><input type="checkbox" id="urgentToggle"> Urgent seulement</label>
+</div>
+
     <h3>Tâches à court terme (&lt; 30h)</h3>
     <div class="task-grid">
       {% for task in short_tasks %}
@@ -41,9 +45,11 @@
     <h3>Tâches à long terme (≥ 30h)</h3>
     <div class="task-grid">
       {% for task in long_tasks %}
-        <div class="task {{ 'late' if task.status == 'late' else 'ok' }}" data-task-id="{{ task.id }}"
-            data-zone="{% if task.name.startswith('SDB-') %}SDB-{% elif task.name.startswith('S-') %}S-{% elif task.name.startswith('C-') %}C-{% elif task.name.startswith('T-') %}T-{% elif task.name.startswith('E-') %}E-{% else %}AUTRE{% endif %}">
-
+        <div class="task {{ 'late' if task.status == 'late' else 'ok' }}" 
+     data-task-id="{{ task.id }}"
+     data-frequency="{{ task.frequency_hours }}"
+     data-remaining="{{ task.remaining }}"
+     data-zone="{% if task.name.startswith('SDB-') %}SDB-{% elif task.name.startswith('S-') %}S-{% elif task.name.startswith('C-') %}C-{% elif task.name.startswith('T-') %}T-{% elif task.name.startswith('E-') %}E-{% else %}AUTRE{% endif %}">
 
           <div class="task-header">
             <strong>{{ task.name }}</strong>
